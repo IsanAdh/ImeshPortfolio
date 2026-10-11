@@ -1,0 +1,89 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import WhatsAppButton from '../../components/WhatsAppButton.astro';
+import NewsletterSignup from '../../components/NewsletterSignup.astro';
+import { categorySlug } from '../../data/categories';
+import { formatDate, getPublishedPosts, readingTime } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: {
+      post,
+      related: posts.filter((p) => p.id !== post.id && p.data.category === post.data.category).slice(0, 3),
+    },
+  }));
+}
+
+const { post, related } = Astro.props;
+const { Content } = await render(post);
+const url = new URL(Astro.url.pathname, Astro.site).toString();
+const shareText = encodeURIComponent(`${post.data.title} ${url}`);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.date.toISOString(),
+  dateModified: (post.data.updated ?? post.data.date).toISOString(),
+  author: { '@type': 'Person', name: post.data.author },
+  image: post.data.cover ? new URL(post.data.cover, Astro.site).toString() : undefined,
+  mainEntityOfPage: url,
+};
+---
+<BaseLayout title={post.data.title} description={post.data.description} image={post.data.cover} type="article" jsonLd={jsonLd}>
+  <header class="page-header">
+    <div class="container">
+      <div class="meta" style="margin-bottom: 12px">
+        <a class="chip" href={`/blog/category/${categorySlug(post.data.category)}/`}>{post.data.category}</a>
+        <span>{formatDate(post.data.date)}</span>
+        {post.data.updated && <span>Updated {formatDate(post.data.updated)}</span>}
+        <span>{readingTime(post)} min read</span>
+      </div>
+      <h1>{post.data.title}</h1>
+      <p>{post.data.description}</p>
+    </div>
+  </header>
+
+  <div class="container article-layout">
+    <article>
+      {post.data.cover && <img src={post.data.cover} alt="" style="border-radius: 12px; margin-bottom: 32px" />}
+      <div class="prose"><Content /></div>
+      <div class="share" style="margin-top: 32px">
+        <span class="muted">Share:</span>
+        <a href={`https://wa.me/?text=${shareText}`} target="_blank" rel="noopener">WhatsApp</a>
+        <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`} target="_blank" rel="noopener">Facebook</a>
+        <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`} target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+      <p class="note">
+        This article is general information, not advice for your situation. See the <a href="/legal/disclaimer/">disclaimer</a>.
+      </p>
+    </article>
+
+    <aside class="article-aside">
+      <div class="card">
+        <h3>Have a question about this?</h3>
+        <p>Ask directly on WhatsApp, or book a consultation for advice on your situation.</p>
+        <WhatsAppButton message={`Hello CA Imesh, I read "${post.data.title}" and have a question: `} label="Ask on WhatsApp" />
+        <a class="btn btn-outline" href="/book/">Book a Consultation</a>
+      </div>
+      <div class="card">
+        <h3>Get deadline alerts</h3>
+        <NewsletterSignup />
+      </div>
+    </aside>
+  </div>
+
+  {related.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <h2>Related articles</h2>
+        <div class="grid grid-3">{related.map((p) => <PostCard post={p} />)}</div>
+      </div>
+    </section>
+  )}
+</BaseLayout>

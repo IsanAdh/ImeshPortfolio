@@ -1,0 +1,15 @@
+---
+import WhatsAppIcon from './WhatsAppIcon.astro';
+import { waLink } from '../lib/whatsapp';
+
+interface Props {
+  message?: string;
+  label?: string;
+  class?: string;
+}
+const { message, label = 'Chat on WhatsApp', class: className = 'btn btn-wa' } = Astro.props;
+---
+<a class={className} href={waLink(message)} target="_blank" rel="noopener" data-track="whatsapp">
+  <WhatsAppIcon />
+  <span>{label}</span>
+</a>

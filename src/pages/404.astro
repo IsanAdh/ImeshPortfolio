@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+---
+<BaseLayout title="Page not found">
+  <section class="section">
+    <div class="container" style="max-width: 640px; text-align: center">
+      <h1>Page not found</h1>
+      <p class="muted">The page may have moved. Try the Knowledge Hub, or ask on WhatsApp.</p>
+      <div class="btn-row" style="justify-content: center">
+        <a class="btn btn-primary" href="/">Home</a>
+        <a class="btn btn-outline" href="/blog/">Knowledge Hub</a>
+        <WhatsAppButton label="WhatsApp" />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

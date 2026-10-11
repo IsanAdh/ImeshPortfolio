@@ -1,0 +1,43 @@
+{
+  "name": "CA Imesh Adhikari",
+  "credential": "Chartered Accountant · ICAN Member",
+  "firm": "Imesh & Associates",
+  "tagline": "Nepal's trusted CA guidance for tax, business & startups",
+  "promise": "Clear, practical answers on tax, compliance and startup finance, so you can focus on running your business.",
+  "description": "CA Imesh Adhikari helps SMEs, startups, freelancers and NRNs in Nepal with income tax, VAT, company registration, audit and startup finance.",
+  "photo": "/uploads/profile-placeholder.svg",
+  "whatsapp": {
+    "number": "9779800000000",
+    "defaultMessage": "Hello CA Imesh, I found your website and would like to ask about "
+  },
+  "phone": "+977 98XXXXXXXX",
+  "email": "hello@example.com",
+  "hours": "Sunday to Friday, 10:00 to 17:00",
+  "offices": [
+    {
+      "city": "Kathmandu",
+      "address": "Office address to be added",
+      "mapEmbedUrl": ""
+    },
+    {
+      "city": "Chitwan",
+      "address": "Office address to be added",
+      "mapEmbedUrl": ""
+    }
+  ],
+  "stats": {
+    "yearsInPractice": "",
+    "clientsServed": "",
+    "icanMembershipNo": ""
+  },
+  "bookingUrl": "",
+  "newsletterFormAction": "",
+  "gaMeasurementId": "",
+  "social": {
+    "facebook": "",
+    "linkedin": "",
+    "youtube": "",
+    "instagram": "",
+    "tiktok": ""
+  }
+}

@@ -1,0 +1,38 @@
+---
+// A form that, instead of posting to a server, opens WhatsApp with the answers pre-filled.
+// Each field needs a `name`; its `data-label` (or name) is used as the line label in the message.
+import WhatsAppIcon from './WhatsAppIcon.astro';
+import { waNumber } from '../lib/whatsapp';
+
+interface Props {
+  intro: string;
+  submitLabel?: string;
+}
+const { intro, submitLabel = 'Send on WhatsApp' } = Astro.props;
+---
+<form class="form" data-wa-form data-wa-number={waNumber} data-wa-intro={intro}>
+  <slot />
+  <div>
+    <button type="submit" class="btn btn-wa"><WhatsAppIcon /> {submitLabel}</button>
+  </div>
+  <p class="form-note">This opens WhatsApp with your message ready to send. Nothing is stored on this website.</p>
+</form>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('form[data-wa-form]').forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const lines = [form.dataset.waIntro ?? ''];
+      for (const el of Array.from(form.elements)) {
+        if (!(el instanceof HTMLInputElement || el instanceof HTMLSelectElement || el instanceof HTMLTextAreaElement)) continue;
+        if (!el.name || !el.value.trim()) continue;
+        if (el instanceof HTMLInputElement && (el.type === 'radio' || el.type === 'checkbox') && !el.checked) continue;
+        lines.push(`${el.dataset.label ?? el.name}: ${el.value.trim()}`);
+      }
+      const url = `https://wa.me/${form.dataset.waNumber}?text=${encodeURIComponent(lines.join('\n'))}`;
+      const win = window.open(url, '_blank');
+      if (win) win.opener = null;
+      else window.location.href = url;
+    });
+  });
+</script>

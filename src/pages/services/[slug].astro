@@ -1,0 +1,44 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CtaSection from '../../components/CtaSection.astro';
+import WhatsAppButton from '../../components/WhatsAppButton.astro';
+import { getServices } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const services = await getServices();
+  return services.map((service) => ({ params: { slug: service.id }, props: { service } }));
+}
+
+const { service } = Astro.props;
+const { Content } = await render(service);
+const waMessage = `Hello CA Imesh, I'd like to ask about your ${service.data.title} service.`;
+---
+<BaseLayout title={service.data.title} description={service.data.summary}>
+  <header class="page-header">
+    <div class="container">
+      <span class="eyebrow"><a href="/services/">Services</a></span>
+      <h1>{service.data.title}</h1>
+      <p>{service.data.summary}</p>
+    </div>
+  </header>
+  <div class="container article-layout">
+    <div class="prose"><Content /></div>
+    <aside class="article-aside">
+      {service.data.highlights.length > 0 && (
+        <div class="card">
+          <h3>What's included</h3>
+          <ul class="check-list">
+            {service.data.highlights.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+      )}
+      <div class="card">
+        <h3>Get started</h3>
+        <a class="btn btn-primary" href={`/book/?service=${encodeURIComponent(service.data.title)}`}>Book a Consultation</a>
+        <WhatsAppButton message={waMessage} label="Ask on WhatsApp" />
+      </div>
+    </aside>
+  </div>
+  <CtaSection message={waMessage} />
+</BaseLayout>

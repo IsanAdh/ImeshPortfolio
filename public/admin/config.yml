@@ -1,0 +1,167 @@
+# Decap CMS: the editor Imesh uses at https://<domain>/admin to publish content.
+# Every save is committed to the GitHub repo, and the host (Netlify) rebuilds the site automatically.
+
+backend:
+  name: github
+  repo: IsanAdh/ImeshPortfolio
+  branch: main
+
+# Lets you edit locally without GitHub: run `npm run cms` alongside `npm run dev`, then open /admin.
+local_backend: true
+
+# Uncomment to get Draft -> In review -> Ready workflow instead of publishing straight away.
+# publish_mode: editorial_workflow
+
+media_folder: public/uploads
+public_folder: /uploads
+
+site_url: https://caimesh.com.np
+
+collections:
+  - name: blog
+    label: Blog articles
+    label_singular: Article
+    folder: src/content/blog
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}} ({{category}})"
+    sortable_fields: [date, title, category]
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Short description (shown in listings and Google), name: description, widget: text }
+      - { label: Publish date, name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: Last updated, name: updated, widget: datetime, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false, required: false }
+      # Keep in sync with src/data/categories.ts
+      - label: Category
+        name: category
+        widget: select
+        options: ["Income Tax", "VAT", "TDS", "Company Law", "Startups", "Budget Updates", "Deadlines"]
+      - { label: Tags, name: tags, widget: list, required: false, default: [] }
+      - { label: Cover image, name: cover, widget: image, required: false }
+      - { label: Author, name: author, widget: string, default: "CA Imesh Adhikari" }
+      - { label: Draft (hide from site), name: draft, widget: boolean, default: false }
+      - { label: Article, name: body, widget: markdown }
+
+  - name: resources
+    label: Resources & downloads
+    label_singular: Resource
+    folder: src/content/resources
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Description, name: description, widget: text }
+      - label: Type
+        name: type
+        widget: select
+        options: ["Checklist", "Template", "Guide", "Calendar", "Presentation", "Other"]
+      - label: Category
+        name: category
+        widget: select
+        options: ["Income Tax", "VAT", "TDS", "Company Law", "Startups", "Budget Updates", "Deadlines"]
+      - label: How visitors get it
+        name: access
+        widget: select
+        default: download
+        options:
+          - { label: "Direct download", value: download }
+          - { label: "Request on WhatsApp (collects the lead)", value: whatsapp }
+      - { label: File (PDF, Excel, etc.), name: file, widget: file, required: false }
+      - { label: Cover image, name: cover, widget: image, required: false }
+      - { label: Feature on homepage, name: featured, widget: boolean, default: false }
+      - { label: Date, name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: Notes (optional), name: body, widget: markdown, required: false }
+
+  - name: services
+    label: Services
+    label_singular: Service
+    folder: src/content/services
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: One-line summary, name: summary, widget: string }
+      - { label: Display order, name: order, widget: number, value_type: int, default: 10 }
+      - { label: What's included, name: highlights, widget: list, required: false }
+      - { label: Full description, name: body, widget: markdown }
+
+  - name: pages
+    label: Pages
+    files:
+      - { label: About, name: about, file: src/content/pages/about.md, fields: [{ label: Title, name: title, widget: string }, { label: SEO description, name: description, widget: text, required: false }, { label: Content, name: body, widget: markdown }] }
+      - { label: Disclaimer, name: disclaimer, file: src/content/pages/disclaimer.md, fields: [{ label: Title, name: title, widget: string }, { label: Content, name: body, widget: markdown }] }
+      - { label: Privacy Policy, name: privacy, file: src/content/pages/privacy.md, fields: [{ label: Title, name: title, widget: string }, { label: Content, name: body, widget: markdown }] }
+      - { label: Terms of Use, name: terms, file: src/content/pages/terms.md, fields: [{ label: Title, name: title, widget: string }, { label: Content, name: body, widget: markdown }] }
+
+  - name: settings
+    label: Settings
+    editor: { preview: false }
+    files:
+      - label: Site details & contact
+        name: site
+        file: src/data/site.json
+        fields:
+          - { label: Name, name: name, widget: string }
+          - { label: Credential line, name: credential, widget: string }
+          - { label: Firm name, name: firm, widget: string }
+          - { label: Headline (homepage), name: tagline, widget: string }
+          - { label: One-line promise, name: promise, widget: text }
+          - { label: SEO description, name: description, widget: text }
+          - { label: Profile photo, name: photo, widget: image }
+          - label: WhatsApp
+            name: whatsapp
+            widget: object
+            fields:
+              - { label: "Number with country code, digits only (e.g. 9779812345678)", name: number, widget: string }
+              - { label: Default pre-filled message, name: defaultMessage, widget: string }
+          - { label: Phone, name: phone, widget: string }
+          - { label: Email, name: email, widget: string }
+          - { label: Office hours, name: hours, widget: string }
+          - label: Offices
+            name: offices
+            widget: list
+            fields:
+              - { label: City, name: city, widget: string }
+              - { label: Address, name: address, widget: string }
+              - { label: "Google Maps embed URL (Share > Embed a map > copy the src)", name: mapEmbedUrl, widget: string, required: false }
+          - label: Trust bar
+            name: stats
+            widget: object
+            fields:
+              - { label: "Years in practice (e.g. 8+)", name: yearsInPractice, widget: string, required: false }
+              - { label: "Clients served (e.g. 300+)", name: clientsServed, widget: string, required: false }
+              - { label: ICAN membership no., name: icanMembershipNo, widget: string, required: false }
+          - { label: "Online booking link (Cal.com / Calendly), optional", name: bookingUrl, widget: string, required: false }
+          - { label: "Newsletter form action URL (Brevo / Mailchimp), optional", name: newsletterFormAction, widget: string, required: false }
+          - { label: "Google Analytics ID (G-XXXX), optional", name: gaMeasurementId, widget: string, required: false }
+          - label: Social links
+            name: social
+            widget: object
+            fields:
+              - { label: Facebook, name: facebook, widget: string, required: false }
+              - { label: LinkedIn, name: linkedin, widget: string, required: false }
+              - { label: YouTube, name: youtube, widget: string, required: false }
+              - { label: Instagram, name: instagram, widget: string, required: false }
+              - { label: TikTok, name: tiktok, widget: string, required: false }
+      - label: Testimonials
+        name: testimonials
+        file: src/data/testimonials.json
+        fields:
+          - label: Testimonials
+            name: items
+            widget: list
+            required: false
+            fields:
+              - { label: Client name, name: name, widget: string }
+              - { label: Role / company, name: role, widget: string, required: false }
+              - { label: Quote, name: quote, widget: text }
+      - label: FAQs
+        name: faqs
+        file: src/data/faqs.json
+        fields:
+          - label: Questions
+            name: items
+            widget: list
+            fields:
+              - { label: Question, name: question, widget: string }
+              - { label: Answer, name: answer, widget: text }

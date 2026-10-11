@@ -1,0 +1,26 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { categorySlug } from '../data/categories';
+import { formatDate, readingTime } from '../lib/content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+const { post } = Astro.props;
+const href = `/blog/${post.id}/`;
+---
+<article class="card">
+  {post.data.cover && (
+    <a class="card-media" href={href} tabindex="-1">
+      <img src={post.data.cover} alt="" loading="lazy" />
+    </a>
+  )}
+  <div class="meta">
+    <a class="chip" href={`/blog/category/${categorySlug(post.data.category)}/`}>{post.data.category}</a>
+    <span>{formatDate(post.data.date)}</span>
+    <span>{readingTime(post)} min read</span>
+  </div>
+  <h3><a href={href}>{post.data.title}</a></h3>
+  <p>{post.data.description}</p>
+  <a class="card-link" href={href}>Read article →</a>
+</article>

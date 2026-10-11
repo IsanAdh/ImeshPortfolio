@@ -1,0 +1,90 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import FloatingContact from '../components/FloatingContact.astro';
+import site from '../data/site.json';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  type?: 'website' | 'article';
+  jsonLd?: Record<string, unknown>;
+}
+const { title, description = site.description, image = site.photo, type = 'website', jsonLd } = Astro.props;
+
+const fullTitle = title ? `${title} | ${site.name}` : `${site.name} | ${site.tagline}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL(image, Astro.site);
+
+const businessLd = {
+  '@context': 'https://schema.org',
+  '@type': 'AccountingService',
+  name: site.firm,
+  founder: { '@type': 'Person', name: site.name, jobTitle: 'Chartered Accountant' },
+  url: Astro.site?.toString(),
+  telephone: site.phone,
+  email: site.email,
+  areaServed: 'Nepal',
+  address: site.offices.map((office) => ({
+    '@type': 'PostalAddress',
+    addressLocality: office.city,
+    streetAddress: office.address,
+    addressCountry: 'NP',
+  })),
+  sameAs: Object.values(site.social).filter(Boolean),
+};
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" type="application/rss+xml" title={`${site.name} Knowledge Hub`} href="/rss.xml" />
+
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(businessLd)} />
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+
+    {site.gaMeasurementId && (
+      <>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${site.gaMeasurementId}`}></script>
+        <script is:inline define:vars={{ gaId: site.gaMeasurementId }}>
+          window.dataLayer = window.dataLayer || [];
+          window.gtag = function () { window.dataLayer.push(arguments); };
+          window.gtag('js', new Date());
+          window.gtag('config', gaId);
+          // Count WhatsApp clicks as leads.
+          document.addEventListener('click', (e) => {
+            const link = e.target.closest('[data-track="whatsapp"]');
+            if (link) window.gtag('event', 'whatsapp_click', { page_path: location.pathname });
+          });
+        </script>
+      </>
+    )}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <FloatingContact />
+  </body>
+</html>

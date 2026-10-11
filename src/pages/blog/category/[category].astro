@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PostCard from '../../../components/PostCard.astro';
+import { CATEGORIES, categorySlug } from '../../../data/categories';
+import { getPublishedPosts } from '../../../lib/content';
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+  return CATEGORIES.filter((c) => posts.some((p) => p.data.category === c)).map((category) => ({
+    params: { category: categorySlug(category) },
+    props: { category, posts: posts.filter((p) => p.data.category === category) },
+  }));
+}
+
+const { category, posts } = Astro.props;
+const allPosts = await getPublishedPosts();
+const usedCategories = CATEGORIES.filter((c) => allPosts.some((p) => p.data.category === c));
+---
+<BaseLayout title={`${category} articles`} description={`Articles about ${category} in Nepal by CA Imesh Adhikari.`}>
+  <header class="page-header">
+    <div class="container">
+      <span class="eyebrow"><a href="/blog/">Knowledge Hub</a></span>
+      <h1>{category}</h1>
+    </div>
+  </header>
+  <div class="container">
+    <nav class="chip-list" aria-label="Categories">
+      <a href="/blog/">All</a>
+      {usedCategories.map((c) => (
+        <a href={`/blog/category/${categorySlug(c)}/`} aria-current={c === category ? 'page' : undefined}>{c}</a>
+      ))}
+    </nav>
+    <div class="grid grid-3">{posts.map((post) => <PostCard post={post} />)}</div>
+  </div>
+</BaseLayout>

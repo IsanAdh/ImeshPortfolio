@@ -1,0 +1,17 @@
+---
+// If an email provider form action (Brevo/Mailchimp) is set in site.json, post to it.
+// Otherwise fall back to a WhatsApp opt-in for updates.
+import site from '../data/site.json';
+import WhatsAppButton from './WhatsAppButton.astro';
+---
+{site.newsletterFormAction ? (
+  <form class="newsletter" action={site.newsletterFormAction} method="post" target="_blank">
+    <input type="email" name="EMAIL" placeholder="Your email" required aria-label="Email address" />
+    <button class="btn btn-light" type="submit">Subscribe</button>
+  </form>
+) : (
+  <WhatsAppButton
+    message="Hello CA Imesh, please add me to your tax deadline and budget update alerts."
+    label="Get updates on WhatsApp"
+  />
+)}

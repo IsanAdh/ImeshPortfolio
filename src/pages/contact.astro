@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WhatsAppForm from '../components/WhatsAppForm.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import site from '../data/site.json';
+import faqs from '../data/faqs.json';
+
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.items.map((f) => ({
+    '@type': 'Question',
+    name: f.question,
+    acceptedAnswer: { '@type': 'Answer', text: f.answer },
+  })),
+};
+---
+<BaseLayout title="Contact" description={`Contact ${site.name} on WhatsApp, phone or email. Offices in Kathmandu and Chitwan.`} jsonLd={faqLd}>
+  <header class="page-header">
+    <div class="container">
+      <span class="eyebrow">Contact</span>
+      <h1>Let's talk</h1>
+      <p>WhatsApp is the fastest way to reach me. You can also call, email or visit the office.</p>
+    </div>
+  </header>
+
+  <div class="container grid grid-2" style="align-items: start">
+    <div class="calc">
+      <h2 style="font-size: 1.4rem">Send a message</h2>
+      <WhatsAppForm intro="Hello CA Imesh, I'm contacting you from your website.">
+        <label>Your name
+          <input name="name" data-label="Name" required autocomplete="name" />
+        </label>
+        <label>I need help with
+          <select name="topic" data-label="Topic">
+            <option>General question</option>
+            <option>Tax & VAT</option>
+            <option>Business registration</option>
+            <option>Startup finance</option>
+            <option>Audit & advisory</option>
+          </select>
+        </label>
+        <label>Message
+          <textarea name="message" data-label="Message" required></textarea>
+        </label>
+      </WhatsAppForm>
+    </div>
+
+    <div style="display: grid; gap: 16px">
+      <div class="card">
+        <h3>Direct contact</h3>
+        <WhatsAppButton />
+        <p><strong>Phone:</strong> <a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a></p>
+        <p><strong>Email:</strong> <a href={`mailto:${site.email}`}>{site.email}</a></p>
+        <p><strong>Hours:</strong> {site.hours}</p>
+      </div>
+      {site.offices.map((office) => (
+        <div class="card">
+          <h3>{office.city} office</h3>
+          <p>{office.address}</p>
+          {office.mapEmbedUrl && (
+            <iframe
+              src={office.mapEmbedUrl}
+              title={`Map of the ${office.city} office`}
+              loading="lazy"
+              style="border: 0; width: 100%; height: 220px; border-radius: 8px; margin-top: 8px"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+
+  {faqs.items.length > 0 && (
+    <section class="section">
+      <div class="container" style="max-width: 800px">
+        <h2>Frequently asked questions</h2>
+        <div class="faq">
+          {faqs.items.map((f) => (
+            <details>
+              <summary>{f.question}</summary>
+              <p>{f.answer}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+</BaseLayout>

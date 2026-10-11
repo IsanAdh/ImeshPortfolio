@@ -1,0 +1,104 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CtaSection from '../components/CtaSection.astro';
+---
+<BaseLayout title="Free Calculators" description="Free VAT and loan EMI calculators for Nepal.">
+  <header class="page-header">
+    <div class="container">
+      <span class="eyebrow">Free tools</span>
+      <h1>Free calculators</h1>
+      <p>Quick estimates for everyday finance questions. Results are indicative only.</p>
+    </div>
+  </header>
+
+  <div class="container grid grid-2" style="align-items: start">
+    <section class="calc" id="vat">
+      <h2 style="font-size: 1.4rem">VAT calculator</h2>
+      <form class="form" data-vat-form>
+        <label>Amount (NPR)
+          <input type="number" name="amount" min="0" step="any" required inputmode="decimal" />
+        </label>
+        <div class="form-row">
+          <label>VAT rate (%)
+            <input type="number" name="rate" value="13" min="0" step="any" />
+          </label>
+          <label>The amount is
+            <select name="mode">
+              <option value="exclusive">Excluding VAT</option>
+              <option value="inclusive">Including VAT</option>
+            </select>
+          </label>
+        </div>
+        <div><button class="btn btn-primary" type="submit">Calculate</button></div>
+      </form>
+      <div class="calc-result" data-vat-result hidden>
+        <div><span>Amount before VAT</span><strong data-out="net"></strong></div>
+        <div><span>VAT</span><strong data-out="vat"></strong></div>
+        <div><span>Total with VAT</span><strong data-out="gross"></strong></div>
+      </div>
+    </section>
+
+    <section class="calc" id="emi">
+      <h2 style="font-size: 1.4rem">Loan EMI calculator</h2>
+      <form class="form" data-emi-form>
+        <label>Loan amount (NPR)
+          <input type="number" name="principal" min="0" step="any" required inputmode="decimal" />
+        </label>
+        <div class="form-row">
+          <label>Interest rate (% per year)
+            <input type="number" name="rate" min="0" step="any" required />
+          </label>
+          <label>Tenure (years)
+            <input type="number" name="years" min="0.1" step="any" required />
+          </label>
+        </div>
+        <div><button class="btn btn-primary" type="submit">Calculate</button></div>
+      </form>
+      <div class="calc-result" data-emi-result hidden>
+        <div><span>Monthly EMI</span><strong data-out="emi"></strong></div>
+        <div><span>Total interest</span><strong data-out="interest"></strong></div>
+        <div><span>Total payment</span><strong data-out="total"></strong></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <span class="chip" style="align-self: flex-start">Coming soon</span>
+      <h3>Income tax, TDS & salary calculators</h3>
+      <p>Tax slab calculators will be added after rates are checked against the current Finance Act.</p>
+    </section>
+  </div>
+
+  <CtaSection title="Need an exact figure?" text="Calculators give estimates. For your actual liability, talk to a CA." />
+</BaseLayout>
+
+<script>
+  const npr = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'NPR', maximumFractionDigits: 2 });
+
+  function show(result: HTMLElement | null, values: Record<string, number>) {
+    if (!result) return;
+    for (const [key, value] of Object.entries(values)) {
+      const el = result.querySelector(`[data-out="${key}"]`);
+      if (el) el.textContent = npr.format(value);
+    }
+    result.hidden = false;
+  }
+
+  document.querySelector<HTMLFormElement>('[data-vat-form]')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget as HTMLFormElement);
+    const amount = Number(data.get('amount'));
+    const rate = Number(data.get('rate')) / 100;
+    const net = data.get('mode') === 'inclusive' ? amount / (1 + rate) : amount;
+    show(document.querySelector('[data-vat-result]'), { net, vat: net * rate, gross: net * (1 + rate) });
+  });
+
+  document.querySelector<HTMLFormElement>('[data-emi-form]')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget as HTMLFormElement);
+    const principal = Number(data.get('principal'));
+    const r = Number(data.get('rate')) / 12 / 100;
+    const n = Math.round(Number(data.get('years')) * 12);
+    const emi = r === 0 ? principal / n : (principal * r * (1 + r) ** n) / ((1 + r) ** n - 1);
+    show(document.querySelector('[data-emi-result]'), { emi, interest: emi * n - principal, total: emi * n });
+  });
+</script>

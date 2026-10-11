@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ResourceCard from '../components/ResourceCard.astro';
+import CtaSection from '../components/CtaSection.astro';
+import { getResources } from '../lib/content';
+
+const resources = await getResources();
+---
+<BaseLayout title="Resources" description="Free checklists, templates and guides for tax, compliance and startups in Nepal.">
+  <header class="page-header">
+    <div class="container">
+      <span class="eyebrow">Resources</span>
+      <h1>Free checklists, templates & guides</h1>
+      <p>Practical downloads for business owners, startups and individuals.</p>
+    </div>
+  </header>
+  <div class="container">
+    {resources.length > 0 ? (
+      <div class="grid grid-3">{resources.map((r) => <ResourceCard resource={r} />)}</div>
+    ) : (
+      <p class="muted">Resources are coming soon.</p>
+    )}
+  </div>
+  <CtaSection />
+</BaseLayout>

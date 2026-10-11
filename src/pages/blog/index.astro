@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { CATEGORIES, categorySlug } from '../../data/categories';
+import { getPublishedPosts } from '../../lib/content';
+
+const posts = await getPublishedPosts();
+const usedCategories = CATEGORIES.filter((c) => posts.some((p) => p.data.category === c));
+---
+<BaseLayout title="Knowledge Hub" description="Articles on income tax, VAT, TDS, company law, startups and budget updates in Nepal.">
+  <header class="page-header">
+    <div class="container">
+      <span class="eyebrow">Knowledge Hub</span>
+      <h1>Tax, business & startup guides</h1>
+      <p>Plain-language articles on Nepal's tax rules, compliance deadlines and startup finance.</p>
+    </div>
+  </header>
+  <div class="container">
+    <nav class="chip-list" aria-label="Categories">
+      <a href="/blog/" aria-current="page">All</a>
+      {usedCategories.map((c) => <a href={`/blog/category/${categorySlug(c)}/`}>{c}</a>)}
+    </nav>
+    {posts.length > 0 ? (
+      <div class="grid grid-3">{posts.map((post) => <PostCard post={post} />)}</div>
+    ) : (
+      <p class="muted">Articles are coming soon.</p>
+    )}
+  </div>
+</BaseLayout>

@@ -1,0 +1,20 @@
+{
+  "items": [
+    {
+      "question": "What is the quickest way to reach you?",
+      "answer": "WhatsApp. Use any WhatsApp button on this site and your message opens pre-filled, ready to send."
+    },
+    {
+      "question": "Do you work with clients outside Kathmandu or outside Nepal?",
+      "answer": "Yes. Consultations can happen over Zoom or Google Meet, and documents can be shared securely online."
+    },
+    {
+      "question": "What should I prepare before a consultation?",
+      "answer": "A short summary of your question, and any relevant documents such as PAN/VAT certificates, previous returns or financial statements."
+    },
+    {
+      "question": "Is the information on this website professional advice?",
+      "answer": "No. Articles and tools are general information. For advice on your situation, please book a consultation."
+    }
+  ]
+}

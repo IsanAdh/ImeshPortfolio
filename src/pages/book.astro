@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WhatsAppForm from '../components/WhatsAppForm.astro';
+import site from '../data/site.json';
+import { getServices } from '../lib/content';
+
+const services = await getServices();
+---
+<BaseLayout title="Book a Consultation" description={`Book a 30 or 60-minute consultation with ${site.name}, online or at the office.`}>
+  <header class="page-header">
+    <div class="container">
+      <span class="eyebrow">Consultation</span>
+      <h1>Book a consultation</h1>
+      <p>Choose a topic and a time that suits you. You'll get a confirmation on WhatsApp.</p>
+    </div>
+  </header>
+
+  <div class="container article-layout">
+    <div class="calc">
+      <WhatsAppForm intro="Hello CA Imesh, I'd like to book a consultation." submitLabel="Request booking on WhatsApp">
+        <div class="form-row">
+          <label>Your name
+            <input name="name" data-label="Name" required autocomplete="name" />
+          </label>
+          <label>Topic
+            <select name="topic" data-label="Topic" required data-service-select>
+              <option value="">Select a topic</option>
+              {services.map((s) => <option value={s.data.title}>{s.data.title}</option>)}
+              <option value="Other">Other</option>
+            </select>
+          </label>
+        </div>
+        <div class="form-row">
+          <label>Duration
+            <select name="duration" data-label="Duration">
+              <option>30 minutes</option>
+              <option>60 minutes</option>
+            </select>
+          </label>
+          <label>Preferred date & time
+            <input name="when" data-label="Preferred time" type="datetime-local" />
+          </label>
+        </div>
+        <fieldset class="radio-group" style="border: 0; padding: 0; margin: 0">
+          <legend style="font-weight: 500; font-size: 0.9rem; margin-bottom: 6px">Meeting mode</legend>
+          <label><input type="radio" name="mode" data-label="Mode" value="Online (Zoom/Meet)" checked /> Online</label>
+          {site.offices.map((office) => (
+            <label><input type="radio" name="mode" data-label="Mode" value={`Office: ${office.city}`} /> {office.city} office</label>
+          ))}
+        </fieldset>
+        <label>Briefly describe your question
+          <textarea name="details" data-label="Details"></textarea>
+        </label>
+      </WhatsAppForm>
+    </div>
+
+    <aside class="article-aside">
+      {site.bookingUrl && (
+        <div class="card">
+          <h3>Book & pay online</h3>
+          <p>Pick a slot from the live calendar and pay securely.</p>
+          <a class="btn btn-primary" href={site.bookingUrl} target="_blank" rel="noopener">Open calendar</a>
+        </div>
+      )}
+      <div class="card">
+        <h3>What happens next</h3>
+        <ol style="margin: 0; padding-left: 20px; color: var(--muted)">
+          <li>Your request opens in WhatsApp; press send.</li>
+          <li>You receive a confirmed slot and payment details.</li>
+          <li>Meet online or at the office.</li>
+        </ol>
+      </div>
+    </aside>
+  </div>
+</BaseLayout>
+
+<script>
+  // Pre-select the topic when arriving from a service page (/book/?service=Tax%20%26%20VAT).
+  const service = new URLSearchParams(location.search).get('service');
+  const select = document.querySelector<HTMLSelectElement>('[data-service-select]');
+  if (service && select && Array.from(select.options).some((o) => o.value === service)) select.value = service;
+</script>

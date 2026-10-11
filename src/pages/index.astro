@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import ResourceCard from '../components/ResourceCard.astro';
+import CtaSection from '../components/CtaSection.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import site from '../data/site.json';
+import testimonials from '../data/testimonials.json';
+import { getPublishedPosts, getResources, getServices } from '../lib/content';
+
+const services = await getServices();
+const latestPosts = (await getPublishedPosts()).slice(0, 3);
+const featuredResource = (await getResources()).find((r) => r.data.featured);
+const reviews = testimonials.items as { name: string; role?: string; quote: string }[];
+
+// Trust bar: only show the stats that have been filled in.
+const trust = [
+  { value: 'CA', label: 'ICAN member' },
+  { value: site.stats.yearsInPractice, label: 'Years in practice' },
+  { value: site.stats.clientsServed, label: 'Clients served' },
+  { value: site.firm, label: 'Firm' },
+].filter((item) => item.value);
+---
+<BaseLayout>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="eyebrow">{site.credential}</span>
+        <h1>{site.tagline}</h1>
+        <p class="lead">{site.promise}</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="/book/">Book a Consultation</a>
+          <a class="btn btn-outline" href="/tools/">Free Calculators</a>
+          <WhatsAppButton label="WhatsApp" />
+        </div>
+      </div>
+      <div class="hero-photo">
+        <img src={site.photo} alt={`Portrait of ${site.name}`} width="480" height="600" />
+      </div>
+    </div>
+  </section>
+
+  <div class="trust-bar">
+    <div class="container trust-items">
+      {trust.map((item) => (
+        <div class="trust-item">
+          <strong>{item.value}</strong>
+          <span>{item.label}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Services</span>
+        <h2>How I can help</h2>
+        <p>Tax, compliance and finance support for SMEs, startups, freelancers, NRNs and individuals.</p>
+      </div>
+      <div class="grid grid-4">
+        {services.map((service) => (
+          <article class="card">
+            <h3><a href={`/services/${service.id}/`}>{service.data.title}</a></h3>
+            <p>{service.data.summary}</p>
+            <a class="card-link" href={`/services/${service.id}/`}>Learn more →</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container grid grid-2" style="align-items: center">
+      <div>
+        <span class="eyebrow">Free tools</span>
+        <h2>Work out the numbers in seconds</h2>
+        <p class="muted">VAT and loan EMI calculators, with more on the way.</p>
+        <a class="btn btn-primary" href="/tools/">Open the calculators</a>
+      </div>
+      {featuredResource && <ResourceCard resource={featuredResource} />}
+    </div>
+  </section>
+
+  {latestPosts.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Knowledge Hub</span>
+          <h2>Latest articles</h2>
+          <p>Budget updates, tax deadlines and plain-language guides.</p>
+        </div>
+        <div class="grid grid-3">
+          {latestPosts.map((post) => <PostCard post={post} />)}
+        </div>
+        <p style="margin-top: 28px"><a class="btn btn-outline" href="/blog/">View all articles</a></p>
+      </div>
+    </section>
+  )}
+
+  {reviews.length > 0 && (
+    <section class="section section-soft">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Clients</span>
+          <h2>What clients say</h2>
+        </div>
+        <div class="grid grid-3">
+          {reviews.map((t) => (
+            <figure class="card" style="margin: 0">
+              <blockquote class="testimonial" style="margin: 0">“{t.quote}”</blockquote>
+              <figcaption class="testimonial-author">{t.name}{t.role && `, ${t.role}`}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <CtaSection />
+</BaseLayout>

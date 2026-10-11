@@ -1,0 +1,32 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import WhatsAppButton from './WhatsAppButton.astro';
+
+interface Props {
+  resource: CollectionEntry<'resources'>;
+}
+const { resource } = Astro.props;
+const { title, description, type, category, access, file, cover } = resource.data;
+const downloadable = access === 'download' && file;
+---
+<article class="card">
+  {cover && (
+    <div class="card-media"><img src={cover} alt="" loading="lazy" /></div>
+  )}
+  <div class="meta">
+    <span class="chip">{type}</span>
+    <span>{category}</span>
+  </div>
+  <h3>{title}</h3>
+  <p>{description}</p>
+  <div style="margin-top: auto; padding-top: 12px">
+    {downloadable ? (
+      <a class="btn btn-outline" href={file} download>Download</a>
+    ) : (
+      <WhatsAppButton
+        message={`Hello CA Imesh, please send me the "${title}".`}
+        label="Get it on WhatsApp"
+      />
+    )}
+  </div>
+</article>

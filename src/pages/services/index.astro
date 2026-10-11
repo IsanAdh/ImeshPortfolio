@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CtaSection from '../../components/CtaSection.astro';
+import { getServices } from '../../lib/content';
+
+const services = await getServices();
+---
+<BaseLayout title="Services" description="Tax, VAT, company registration, startup finance, audit and advisory services in Nepal.">
+  <header class="page-header">
+    <div class="container">
+      <span class="eyebrow">Services</span>
+      <h1>Professional services</h1>
+      <p>Practical support from registration to annual compliance, for businesses and individuals in Nepal and NRNs abroad.</p>
+    </div>
+  </header>
+  <div class="container grid grid-2">
+    {services.map((service) => (
+      <article class="card">
+        <h3><a href={`/services/${service.id}/`}>{service.data.title}</a></h3>
+        <p>{service.data.summary}</p>
+        {service.data.highlights.length > 0 && (
+          <ul class="check-list" style="margin-top: 12px">
+            {service.data.highlights.map((item) => <li>{item}</li>)}
+          </ul>
+        )}
+        <a class="card-link" href={`/services/${service.id}/`}>Details →</a>
+      </article>
+    ))}
+  </div>
+  <CtaSection />
+</BaseLayout>
