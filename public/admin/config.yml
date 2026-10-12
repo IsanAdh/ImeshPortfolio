@@ -106,7 +106,8 @@ collections:
           - { label: Headline (homepage), name: tagline, widget: string }
           - { label: One-line promise, name: promise, widget: text }
           - { label: SEO description, name: description, widget: text }
-          - { label: Profile photo, name: photo, widget: image }
+          - { label: "Profile photo (transparent PNG cutout)", name: photo, widget: image }
+          - { label: "Link preview image (shown when the site is shared)", name: shareImage, widget: image, required: false }
           - label: WhatsApp
             name: whatsapp
             widget: object

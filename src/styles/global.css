@@ -143,8 +143,9 @@ h3 { font-size: 1.2rem; }
 .hero { padding: 64px 0 48px; background: linear-gradient(180deg, var(--gold-50), #fff); }
 .hero-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; align-items: center; }
 .hero p.lead { font-size: 1.15rem; color: var(--muted); margin: 0 0 28px; max-width: 560px; }
-.hero-photo { border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); aspect-ratio: 4 / 5; background: var(--bg-soft); }
-.hero-photo img { width: 100%; height: 100%; object-fit: cover; }
+.hero-photo { border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); aspect-ratio: 4 / 5; background: var(--bg-soft); padding-top: 5%; }
+/* Transparent cutout: centred, scaled past the frame so the figure fills it; the frame crops the legs. */
+.hero-photo img { width: 100%; height: 128%; object-fit: contain; object-position: center top; }
 @media (max-width: 800px) {
   .hero-grid { grid-template-columns: 1fr; }
   .hero-photo { max-width: 320px; }

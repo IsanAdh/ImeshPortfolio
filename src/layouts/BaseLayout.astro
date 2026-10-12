@@ -12,7 +12,7 @@ interface Props {
   type?: 'website' | 'article';
   jsonLd?: Record<string, unknown>;
 }
-const { title, description = site.description, image = site.photo, type = 'website', jsonLd } = Astro.props;
+const { title, description = site.description, image = site.shareImage || site.photo, type = 'website', jsonLd } = Astro.props;
 
 const fullTitle = title ? `${title} | ${site.name}` : `${site.name} | ${site.tagline}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
