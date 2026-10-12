@@ -1,6 +1,6 @@
 # CA Imesh Adhikari — Website
 
-Personal-brand website for CA Imesh Adhikari (Imesh & Associates), built from `CA_Website_Blueprint.pdf`.
+Personal-brand website for CA Imesh Adhikari, built from `CA_Website_Blueprint.pdf`.
 
 - **Astro** static site: fast, SEO-friendly, free to host.
 - **Decap CMS** at `/admin`: Imesh writes blogs, uploads resources and edits his details in a browser, with no code.

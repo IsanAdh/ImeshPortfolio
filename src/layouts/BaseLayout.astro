@@ -21,8 +21,7 @@ const ogImage = new URL(image, Astro.site);
 const businessLd = {
   '@context': 'https://schema.org',
   '@type': 'AccountingService',
-  name: site.firm,
-  founder: { '@type': 'Person', name: site.name, jobTitle: 'Chartered Accountant' },
+  name: site.name,
   url: Astro.site?.toString(),
   telephone: site.phone,
   email: site.email,

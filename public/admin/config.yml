@@ -103,7 +103,6 @@ collections:
         fields:
           - { label: Name, name: name, widget: string }
           - { label: Credential line, name: credential, widget: string }
-          - { label: Firm name, name: firm, widget: string }
           - { label: Headline (homepage), name: tagline, widget: string }
           - { label: One-line promise, name: promise, widget: text }
           - { label: SEO description, name: description, widget: text }
