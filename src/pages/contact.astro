@@ -15,7 +15,7 @@ const faqLd = {
   })),
 };
 ---
-<BaseLayout title="Contact" description={`Contact ${site.name} on WhatsApp, phone or email. Offices in Kathmandu and Chitwan.`} jsonLd={faqLd}>
+<BaseLayout title="Contact" description={`Contact ${site.name} on WhatsApp, phone or email. Office in ${site.offices.map((o) => o.city).join(' and ')}.`} jsonLd={faqLd}>
   <header class="page-header">
     <div class="container">
       <span class="eyebrow">Contact</span>
