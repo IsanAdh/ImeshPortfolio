@@ -10,7 +10,7 @@ tags:
   - payroll
   - compliance
   - income tax
-cover: /uploads/cover-1200×630.png
+cover: ""
 author: CA Imesh Adhikari
 draft: false
 ---
