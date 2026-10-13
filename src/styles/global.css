@@ -466,6 +466,12 @@ a.chip:hover { color: var(--color-link-hover); text-decoration: underline; }
 .meta-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--color-border-control); }
 .post-card h3 { font-size: 1.5rem; line-height: 1.22; margin: 0; }
 .post-card p { font-size: 1rem; line-height: 1.6; }
+/* Resource card: same panel as an article card, ending in one action button. */
+.resource-tags { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+.resource-tags .chip { margin-bottom: 0; }
+.resource-category { font-size: var(--text-caption); color: var(--color-text-secondary); }
+.resource-action { margin-top: auto; padding-top: var(--space-5); border-top: 1px solid var(--color-border-subtle); }
+.section-inverse .resource-card { border-top: 1px solid var(--color-border-subtle); padding: 0; border-radius: 18px; }
 .post-more { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); margin-top: auto; padding-top: var(--space-5); border-top: 1px solid var(--color-border-subtle); font-size: var(--text-small); font-weight: 600; color: var(--color-text-heading); text-decoration: none; }
 .post-card-body > p { margin-bottom: var(--space-5); }
 .post-more::after { content: '→'; display: grid; place-items: center; flex: none; width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--color-border-subtle); font-size: 1.05rem; transition: background 240ms var(--ease), color 240ms var(--ease), border-color 240ms var(--ease), transform 240ms var(--ease-out); }
