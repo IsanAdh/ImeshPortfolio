@@ -35,7 +35,7 @@ collections:
       - label: Category
         name: category
         widget: select
-        options: ["Income Tax", "VAT", "TDS", "Company Law", "Labour & Payroll", "Startups", "Budget Updates", "Deadlines"]
+        options: ["Income Tax", "VAT", "TDS", "Company Law", "Labour & Payroll", "Shared", "Startups", "Budget Updates", "Deadlines"]
       - { label: Tags, name: tags, widget: list, required: false, default: [] }
       - { label: Cover image, name: cover, widget: image, required: false }
       - { label: Author, name: author, widget: string, default: "CA Imesh Adhikari" }
@@ -58,7 +58,7 @@ collections:
       - label: Category
         name: category
         widget: select
-        options: ["Income Tax", "VAT", "TDS", "Company Law", "Labour & Payroll", "Startups", "Budget Updates", "Deadlines"]
+        options: ["Income Tax", "VAT", "TDS", "Company Law", "Labour & Payroll", "Shared", "Startups", "Budget Updates", "Deadlines"]
       - label: How visitors get it
         name: access
         widget: select

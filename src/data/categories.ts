@@ -5,6 +5,7 @@ export const CATEGORIES = [
   'TDS',
   'Company Law',
   'Labour & Payroll',
+  'Shared',
   'Startups',
   'Budget Updates',
   'Deadlines',
