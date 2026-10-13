@@ -1,21 +1,7 @@
 ---
 title: " Want to Publish Your Article ?"
-description: >-
-  We invite you to share your insights, research, and experiences with our
-  community. Whether you are a finance professional, legal expert, entrepreneur,
-  or student, your voice matters. Publishing your article here will help you:
-
-
-  Showcase your expertise
-
-
-  Reach a wider audience
-
-
-  Contribute to knowledge and professional growth
-
-
-  👉 Submit your article today and be part of a growing network of thought leaders.
+description: We invite you all to share your article and be part of a growing
+  network of thought leaders.
 date: 2026-10-01
 category: Income Tax
 tags:
