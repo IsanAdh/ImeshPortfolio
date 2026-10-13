@@ -1,6 +1,8 @@
 ---
-title: "Social Security Fund (SSF) in Nepal: A Complete Guide for Employers and Employees"
-description: How SSF works in Nepal, who must join, the 31% contribution split, the four benefit schemes, registration steps, tax savings and hospital claims.
+title: "Social Security Fund (SSF) in Nepal: A Complete Guide for Employers and
+  Employees"
+description: How SSF works in Nepal, who must join, the 31% contribution split,
+  the four benefit schemes, registration steps, tax savings and hospital claims.
 date: 2026-10-13
 category: Labour & Payroll
 tags:
@@ -8,6 +10,7 @@ tags:
   - payroll
   - compliance
   - income tax
+cover: /uploads/cover-1200×630.png
 author: CA Imesh Adhikari
 draft: false
 ---
