@@ -1,6 +1,7 @@
 ---
-title: "Sample article: how posts look on this site"
-description: A placeholder article showing headings, lists, tables and quotes. Delete it once real articles are published.
+title: "Sample article: Want to Publish Your Article ?"
+description: A placeholder article showing headings, lists, tables and quotes.
+  Delete it once real articles are published.
 date: 2026-10-01
 category: Income Tax
 tags:
