@@ -35,7 +35,7 @@ collections:
       - label: Category
         name: category
         widget: select
-        options: ["Income Tax", "VAT", "TDS", "Company Law", "Startups", "Budget Updates", "Deadlines"]
+        options: ["Income Tax", "VAT", "TDS", "Company Law", "Labour & Payroll", "Startups", "Budget Updates", "Deadlines"]
       - { label: Tags, name: tags, widget: list, required: false, default: [] }
       - { label: Cover image, name: cover, widget: image, required: false }
       - { label: Author, name: author, widget: string, default: "CA Imesh Adhikari" }
@@ -58,7 +58,7 @@ collections:
       - label: Category
         name: category
         widget: select
-        options: ["Income Tax", "VAT", "TDS", "Company Law", "Startups", "Budget Updates", "Deadlines"]
+        options: ["Income Tax", "VAT", "TDS", "Company Law", "Labour & Payroll", "Startups", "Budget Updates", "Deadlines"]
       - label: How visitors get it
         name: access
         widget: select
@@ -102,7 +102,7 @@ collections:
         file: src/data/site.json
         fields:
           - { label: Name, name: name, widget: string }
-          - { label: Credential line, name: credential, widget: string }
+          - { label: Credential line, name: credential, widget: string, required: false }
           - { label: Headline (homepage), name: tagline, widget: string }
           - { label: One-line promise, name: promise, widget: text }
           - { label: SEO description, name: description, widget: text }

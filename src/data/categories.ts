@@ -4,6 +4,7 @@ export const CATEGORIES = [
   'VAT',
   'TDS',
   'Company Law',
+  'Labour & Payroll',
   'Startups',
   'Budget Updates',
   'Deadlines',

@@ -10,12 +10,12 @@ const year = new Date().getFullYear();
   <div class="container">
     <div class="footer-grid">
       <div>
-        <h4>{site.name}</h4>
-        <p>{site.credential}</p>
+        <p class="footer-brand">{site.name}</p>
+        {site.credential && <p>{site.credential}</p>}
         {socials.length > 0 && (
           <div class="socials">
             {socials.map(([name, url]) => (
-              <a href={url} target="_blank" rel="noopener" style="text-transform: capitalize">{name}</a>
+              <a href={url} target="_blank" rel="noopener">{name}</a>
             ))}
           </div>
         )}
@@ -26,7 +26,7 @@ const year = new Date().getFullYear();
           <li><a href="/services/">Services</a></li>
           <li><a href="/blog/">Knowledge Hub</a></li>
           <li><a href="/resources/">Resources</a></li>
-          <li><a href="/tools/">Free Tools</a></li>
+          <li><a href="/tools/">Finance Calculators</a></li>
           <li><a href="/about/">About</a></li>
         </ul>
       </div>
@@ -41,12 +41,12 @@ const year = new Date().getFullYear();
       </div>
       <div>
         <h4>Tax deadlines & updates</h4>
-        <p style="font-size: 0.9rem">Budget changes and filing reminders, sent occasionally.</p>
+        <p>Budget changes and filing reminders, sent occasionally.</p>
         <NewsletterSignup />
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© {year} {site.name}. All rights reserved.</span>
+      <span>© {year} Mutex Consulting Group. All rights reserved.</span>
       <span>
         <a href="/legal/disclaimer/">Disclaimer</a> · <a href="/legal/privacy/">Privacy</a> · <a href="/legal/terms/">Terms</a>
       </span>

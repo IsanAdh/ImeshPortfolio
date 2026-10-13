@@ -11,15 +11,15 @@ const { Content } = await render(page);
 <BaseLayout title="About" description={page.data.description}>
   <header class="page-header">
     <div class="container">
-      <span class="eyebrow">{site.credential}</span>
+      {site.credential && <span class="eyebrow">{site.credential}</span>}
       <h1>{page.data.title}</h1>
-      <p>{site.promise}</p>
+      <p>Clear, practical answers on taxation, business proposals and projections, compliance and startup finance, so you can focus on running your business.</p>
     </div>
   </header>
-  <div class="container article-layout">
+  <div class="container article-layout about-layout">
     <div class="prose"><Content /></div>
     <aside class="article-aside">
-      <div class="hero-photo"><img src={site.photo} alt={`Portrait of ${site.name}`} width="300" height="375" /></div>
+      <div class="hero-photo"><div class="hero-photo-card"><img src={site.photo} alt={`Portrait of ${site.name}`} width="300" height="375" /></div></div>
       {site.stats.icanMembershipNo && <p class="muted">ICAN Membership No. {site.stats.icanMembershipNo}</p>}
     </aside>
   </div>

@@ -42,7 +42,7 @@ const services = await getServices();
           </label>
         </div>
         <fieldset class="radio-group" style="border: 0; padding: 0; margin: 0">
-          <legend style="font-weight: 500; font-size: 0.9rem; margin-bottom: 6px">Meeting mode</legend>
+          <legend style="margin-bottom: 6px">Meeting mode</legend>
           <label><input type="radio" name="mode" data-label="Mode" value="Online (Zoom/Meet)" checked /> Online</label>
           {site.offices.map((office) => (
             <label><input type="radio" name="mode" data-label="Mode" value={`Office: ${office.city}`} /> {office.city} office</label>
@@ -64,7 +64,7 @@ const services = await getServices();
       )}
       <div class="card">
         <h3>What happens next</h3>
-        <ol style="margin: 0; padding-left: 20px; color: var(--muted)">
+        <ol style="margin: 0; padding-left: 20px; color: var(--color-text-secondary)">
           <li>Your request opens in WhatsApp; press send.</li>
           <li>You receive a confirmed slot and payment details.</li>
           <li>Meet online or at the office.</li>

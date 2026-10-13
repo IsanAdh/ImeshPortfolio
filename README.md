@@ -27,7 +27,7 @@ npm run cms          # (second terminal) lets /admin edit local files without Gi
 | About + legal pages | `src/content/pages/*.md` |
 | Testimonials, FAQs | `src/data/testimonials.json`, `src/data/faqs.json` |
 | Blog categories | `src/data/categories.ts` **and** `public/admin/config.yml` (keep both in sync) |
-| Colours, fonts | `:root` in `src/styles/global.css` |
+| Colours, fonts, spacing (design tokens) | `:root` in `src/styles/global.css`; rules in `docs/brand-guidelines.md` |
 
 ### WhatsApp
 Set `whatsapp.number` in `site.json` to digits only with the country code, e.g. `9779812345678`. Every link is built from it by `src/lib/whatsapp.ts`. Pages pre-fill context-specific messages: the service name, article title, requested resource, or booking details.

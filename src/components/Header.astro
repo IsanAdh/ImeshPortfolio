@@ -1,11 +1,11 @@
 ---
 import site from '../data/site.json';
 
-const links = [
+const links: { href: string; label: string; badge?: string }[] = [
   { href: '/services/', label: 'Services' },
   { href: '/blog/', label: 'Knowledge Hub' },
   { href: '/resources/', label: 'Resources' },
-  { href: '/tools/', label: 'Free Tools' },
+  { href: '/tools/', label: 'Finance Calculators', badge: 'Free' },
   { href: '/about/', label: 'About' },
   { href: '/contact/', label: 'Contact' },
 ];
@@ -16,7 +16,6 @@ const isActive = (href: string) => path.startsWith(href);
   <div class="container header-inner">
     <a class="brand" href="/">
       <span class="brand-name">{site.name}</span>
-      <span class="brand-sub">Chartered Accountant</span>
     </a>
     <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false" data-nav-toggle>
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
@@ -24,9 +23,14 @@ const isActive = (href: string) => path.startsWith(href);
       </svg>
     </button>
     <nav class="nav" aria-label="Main" data-nav>
-      {links.map((link) => (
-        <a href={link.href} aria-current={isActive(link.href) ? 'page' : undefined}>{link.label}</a>
-      ))}
+      <div class="nav-links">
+        {links.map((link) => (
+          <a href={link.href} aria-current={isActive(link.href) ? 'page' : undefined}>
+            {link.label}
+            {link.badge && <span class="nav-badge">{link.badge}</span>}
+          </a>
+        ))}
+      </div>
       <a class="btn btn-primary" href="/book/">Book a Consultation</a>
     </nav>
   </div>

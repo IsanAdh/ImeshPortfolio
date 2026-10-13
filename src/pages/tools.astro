@@ -13,7 +13,7 @@ import CtaSection from '../components/CtaSection.astro';
 
   <div class="container grid grid-2" style="align-items: start">
     <section class="calc" id="vat">
-      <h2 style="font-size: 1.4rem">VAT calculator</h2>
+      <h2>VAT calculator</h2>
       <form class="form" data-vat-form>
         <label>Amount (NPR)
           <input type="number" name="amount" min="0" step="any" required inputmode="decimal" />
@@ -29,7 +29,7 @@ import CtaSection from '../components/CtaSection.astro';
             </select>
           </label>
         </div>
-        <div><button class="btn btn-primary" type="submit">Calculate</button></div>
+        <div><button class="btn btn-dark" type="submit">Calculate</button></div>
       </form>
       <div class="calc-result" data-vat-result hidden>
         <div><span>Amount before VAT</span><strong data-out="net"></strong></div>
@@ -39,7 +39,7 @@ import CtaSection from '../components/CtaSection.astro';
     </section>
 
     <section class="calc" id="emi">
-      <h2 style="font-size: 1.4rem">Loan EMI calculator</h2>
+      <h2>Loan EMI calculator</h2>
       <form class="form" data-emi-form>
         <label>Loan amount (NPR)
           <input type="number" name="principal" min="0" step="any" required inputmode="decimal" />
@@ -52,7 +52,7 @@ import CtaSection from '../components/CtaSection.astro';
             <input type="number" name="years" min="0.1" step="any" required />
           </label>
         </div>
-        <div><button class="btn btn-primary" type="submit">Calculate</button></div>
+        <div><button class="btn btn-dark" type="submit">Calculate</button></div>
       </form>
       <div class="calc-result" data-emi-result hidden>
         <div><span>Monthly EMI</span><strong data-out="emi"></strong></div>
@@ -64,11 +64,10 @@ import CtaSection from '../components/CtaSection.astro';
     <section class="card">
       <span class="chip" style="align-self: flex-start">Coming soon</span>
       <h3>Income tax, TDS & salary calculators</h3>
-      <p>Tax slab calculators will be added after rates are checked against the current Finance Act.</p>
     </section>
   </div>
 
-  <CtaSection title="Need an exact figure?" text="Calculators give estimates. For your actual liability, talk to a CA." />
+  <CtaSection title="Need a tax planning?" text="For your actual liability, talk to a CA." />
 </BaseLayout>
 
 <script>

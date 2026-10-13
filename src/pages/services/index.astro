@@ -13,17 +13,22 @@ const services = await getServices();
       <p>Practical support from registration to annual compliance, for businesses and individuals in Nepal and NRNs abroad.</p>
     </div>
   </header>
-  <div class="container grid grid-2">
-    {services.map((service) => (
-      <article class="card">
-        <h3><a href={`/services/${service.id}/`}>{service.data.title}</a></h3>
-        <p>{service.data.summary}</p>
+  <div class="container service-grid">
+    {services.map((service, index) => (
+      <article class="service-card">
+        <header>
+          <span class="service-num" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+          <div>
+            <h2><a href={`/services/${service.id}/`}>{service.data.title}</a></h2>
+            <p>{service.data.summary}</p>
+          </div>
+        </header>
         {service.data.highlights.length > 0 && (
-          <ul class="check-list" style="margin-top: 12px">
+          <ul class="check-list">
             {service.data.highlights.map((item) => <li>{item}</li>)}
           </ul>
         )}
-        <a class="card-link" href={`/services/${service.id}/`}>Details →</a>
+        <a class="text-link" href={`/services/${service.id}/`} aria-label={`${service.data.title}: view details`}>View details</a>
       </article>
     ))}
   </div>
