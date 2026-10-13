@@ -3,7 +3,7 @@ title: " Want to Publish Your Article ?"
 description: We invite you all to share your article and be part of a growing
   network of thought leaders.
 date: 2026-10-01
-category: Income Tax
+category: Shared
 tags:
   - sample
 author: CA Imesh Adhikari
