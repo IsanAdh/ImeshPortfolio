@@ -718,3 +718,42 @@ textarea { min-height: 128px; resize: vertical; }
 main { padding-bottom: var(--space-9); }
 .section:has(> .container > .callout) { padding: var(--space-7) 0 0; }
 .section-soft + .section:has(> .container > .callout), .section-inverse + .section:has(> .container > .callout) { padding-top: var(--space-9); }
+
+/* Floating header: a frosted, translucent capsule that hovers over the page instead of a full-width white bar.
+   Pages start with extra top padding so their first section sits clear of it. */
+:root { --header-top: 14px; --header-h: 68px; --header-offset: calc(var(--header-top) + var(--header-h)); }
+html { scroll-padding-top: calc(var(--header-offset) + 16px); }
+.site-header { position: fixed; top: var(--header-top); left: 0; right: 0; background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; border-bottom: 0; box-shadow: none; pointer-events: none; }
+.site-header.is-scrolled { box-shadow: none; }
+.site-header .header-inner {
+  pointer-events: auto;
+  width: calc(100% - 32px);
+  max-width: calc(var(--container) - 2 * var(--gutter) + 32px);
+  margin: 0 auto;
+  min-height: var(--header-h);
+  padding: 0 10px 0 22px;
+  background: rgba(255, 255, 255, 0.58);
+  -webkit-backdrop-filter: blur(16px) saturate(1.5);
+  backdrop-filter: blur(16px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 22px;
+  box-shadow: 0 10px 30px rgba(15, 42, 68, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  transition: background 300ms var(--ease), box-shadow 300ms var(--ease), border-color 300ms var(--ease), min-height 240ms var(--ease);
+}
+.site-header.is-scrolled .header-inner { min-height: 60px; background: rgba(255, 255, 255, 0.84); border-color: rgba(15, 42, 68, 0.08); box-shadow: 0 16px 40px rgba(15, 42, 68, 0.14); }
+.site-header .nav-links { background: rgba(250, 248, 246, 0.7); border-color: rgba(15, 42, 68, 0.07); }
+main > .hero { padding-top: calc(var(--space-8) + var(--header-offset)); }
+main > .page-header { padding-top: calc(var(--space-8) + var(--header-offset)); }
+main > .section:first-child { padding-top: calc(var(--space-9) + var(--header-offset)); }
+.split .section-head, .article-aside { top: calc(var(--header-offset) + 28px); }
+@media (max-width: 1240px) {
+  .site-header .nav { top: calc(100% + 10px); left: 16px; right: 16px; padding: var(--space-3) var(--space-4) var(--space-5); background: var(--color-surface-default); border: 1px solid var(--color-border-subtle); border-radius: 20px; box-shadow: 0 24px 50px rgba(15, 42, 68, 0.18); max-height: calc(100vh - var(--header-offset) - 40px); overflow-y: auto; }
+  .site-header .nav-links { background: none; border: 0; }
+}
+@media (max-width: 860px) {
+  :root { --header-top: 10px; --header-h: 62px; }
+  .site-header .header-inner { width: calc(100% - 20px); padding: 0 6px 0 18px; border-radius: 18px; }
+  .site-header .nav { left: 10px; right: 10px; top: calc(100% + 8px); }
+  main > .hero { padding-top: calc(var(--space-7) + var(--header-offset)); }
+  main > .page-header { padding-top: calc(var(--space-7) + var(--header-offset)); }
+}
