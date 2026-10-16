@@ -1,10 +1,13 @@
 # Decap CMS: the editor Imesh uses at https://<domain>/admin to publish content.
-# Every save is committed to the GitHub repo, and the host (Netlify) rebuilds the site automatically.
+# Every save is committed to the GitHub repo, and the server rebuilds the site within a minute.
 
 backend:
   name: github
   repo: IsanAdh/ImeshPortfolio
   branch: main
+  # Sign-in runs through our own service on the server (/opt/caimesh/oauth), not Netlify.
+  base_url: https://caimesh.com.np
+  auth_endpoint: oauth/auth
 
 # Lets you edit locally without GitHub: run `npm run cms` alongside `npm run dev`, then open /admin.
 local_backend: true
