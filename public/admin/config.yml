@@ -75,6 +75,23 @@ collections:
       - { label: Date, name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
       - { label: Notes (optional), name: body, widget: markdown, required: false }
 
+  - name: notices
+    label: Notices
+    label_singular: Notice
+    folder: src/content/notices
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{title}} ({{date}})"
+    sortable_fields: [date, title]
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Date, name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: Short summary (shown in the list), name: summary, widget: text, required: false }
+      - { label: Mark as important, name: important, widget: boolean, default: false, hint: "Important notices are highlighted at the top of the list." }
+      - { label: Attachment (PDF, image, Excel, etc.), name: attachment, widget: file, required: false }
+      - { label: Hide from the website (draft), name: draft, widget: boolean, default: false }
+      - { label: Details, name: body, widget: markdown, required: false }
+
   - name: services
     label: Services
     label_singular: Service

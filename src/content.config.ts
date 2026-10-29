@@ -46,6 +46,19 @@ const services = defineCollection({
   }),
 });
 
+// Notices: announcements, deadlines and office updates, published from the CMS.
+const notices = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/notices' }),
+  schema: z.object({
+    title: z.string(),
+    date: z.coerce.date(),
+    summary: z.preprocess((v) => (v === '' || v === null ? undefined : v), z.string().optional()),
+    important: z.boolean().default(false),
+    attachment: z.preprocess((v) => (v === '' || v === null ? undefined : v), z.string().optional()),
+    draft: z.boolean().default(false),
+  }),
+});
+
 // Free-form pages edited in the CMS: About and the legal pages.
 const pages = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/pages' }),
@@ -55,4 +68,4 @@ const pages = defineCollection({
   }),
 });
 
-export const collections = { blog, resources, services, pages };
+export const collections = { blog, resources, services, pages, notices };

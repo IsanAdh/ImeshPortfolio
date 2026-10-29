@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getNotices } from '../../lib/content';
+
+const notices = await getNotices();
+// Important notices stay at the top; within each group, newest first.
+const ordered = [...notices.filter((n) => n.data.important), ...notices.filter((n) => !n.data.important)];
+---
+<BaseLayout title="Notices" description="Announcements, filing deadlines and office updates from CA Imesh Adhikari.">
+  <header class="page-header">
+    <div class="container">
+      <span class="eyebrow">Notices</span>
+      <h1>Notices</h1>
+      <p>Announcements, filing deadlines and office updates.</p>
+    </div>
+  </header>
+
+  <div class="container">
+    {ordered.length > 0 ? (
+      <ol class="notice-list">
+        {ordered.map((notice) => (
+          <li>
+            <a class:list={['notice-card', { 'is-important': notice.data.important }]} href={`/notices/${notice.id}/`}>
+              <time class="notice-date" datetime={notice.data.date.toISOString().slice(0, 10)}>
+                <span class="notice-day">{notice.data.date.getDate()}</span>
+                <span class="notice-month">{notice.data.date.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })}</span>
+              </time>
+              <div class="notice-body">
+                <div class="notice-tags">
+                  {notice.data.important && <span class="notice-flag">Important</span>}
+                  {notice.data.attachment && <span class="notice-file">Attachment</span>}
+                </div>
+                <h2>{notice.data.title}</h2>
+                {notice.data.summary && <p>{notice.data.summary}</p>}
+              </div>
+            </a>
+          </li>
+        ))}
+      </ol>
+    ) : (
+      <div class="notice-empty">
+        <h2>No notices right now</h2>
+        <p>New announcements will appear here. For anything urgent, <a href="/contact/">get in touch</a>.</p>
+      </div>
+    )}
+  </div>
+</BaseLayout>

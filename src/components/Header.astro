@@ -1,12 +1,12 @@
 ---
 import site from '../data/site.json';
 
-const links: { href: string; label: string; badge?: string }[] = [
+const links: { href: string; label: string; badge?: string; notice?: boolean }[] = [
+  { href: '/about/', label: 'About' },
   { href: '/services/', label: 'Services' },
   { href: '/blog/', label: 'Knowledge Hub' },
   { href: '/resources/', label: 'Resources' },
-  { href: '/tools/', label: 'Finance Calculators', badge: 'Free' },
-  { href: '/about/', label: 'About' },
+  { href: '/notices/', label: 'Notice', notice: true },
   { href: '/contact/', label: 'Contact' },
 ];
 const path = Astro.url.pathname.replace(/\/?$/, '/');
@@ -25,7 +25,8 @@ const isActive = (href: string) => path.startsWith(href);
     <nav class="nav" aria-label="Main" data-nav>
       <div class="nav-links">
         {links.map((link) => (
-          <a href={link.href} aria-current={isActive(link.href) ? 'page' : undefined}>
+          <a href={link.href} class={link.notice ? 'nav-notice' : undefined} aria-current={isActive(link.href) ? 'page' : undefined}>
+            {link.notice && <span class="live-dot" aria-hidden="true"></span>}
             {link.label}
             {link.badge && <span class="nav-badge">{link.badge}</span>}
           </a>

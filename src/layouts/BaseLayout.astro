@@ -91,7 +91,7 @@ const businessLd = {
     <script>
       // Reveal-on-scroll: content rises into place once, staggered among siblings. Styles live in global.css.
       const targets = document.querySelectorAll<HTMLElement>(
-        '.section-head, .index-list li, .pillar, .grid > *, .service-grid > *, .callout, .trust-item, .band-grid > *, .faq details, .article-aside > *, .prose > *, .footer-grid > *'
+        '.section-head, .index-list li, .pillar, .grid > *, .service-grid > *, .notice-list > *, .callout, .trust-item, .band-grid > *, .faq details, .article-aside > *, .prose > *, .footer-grid > *'
       );
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (reduced || !('IntersectionObserver' in window)) {

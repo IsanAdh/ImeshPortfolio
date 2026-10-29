@@ -15,6 +15,12 @@ export async function getResources() {
   return resources.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 }
 
+/** Published notices, newest first. */
+export async function getNotices() {
+  const notices = await getCollection('notices', ({ data }) => !data.draft);
+  return notices.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+}
+
 export function readingTime(post: CollectionEntry<'blog'>) {
   const words = (post.body ?? '').trim().split(/\s+/).length;
   return Math.max(1, Math.round(words / 200));

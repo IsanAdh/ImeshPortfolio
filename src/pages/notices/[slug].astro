@@ -1,0 +1,44 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate, getNotices } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const notices = await getNotices();
+  return notices.map((notice) => ({ params: { slug: notice.id }, props: { notice } }));
+}
+
+const { notice } = Astro.props;
+const { Content } = await render(notice);
+const { title, date, summary, important, attachment } = notice.data;
+const fileName = attachment ? decodeURIComponent(attachment.split('/').pop() ?? '') : '';
+---
+<BaseLayout title={title} description={summary ?? `Notice dated ${formatDate(date)}.`}>
+  <header class="page-header">
+    <div class="container">
+      <span class="eyebrow"><a href="/notices/">Notices</a></span>
+      <div class="meta" style="margin-bottom: 12px">
+        {important && <span class="notice-flag">Important</span>}
+        <span>{formatDate(date)}</span>
+      </div>
+      <h1>{title}</h1>
+      {summary && <p>{summary}</p>}
+    </div>
+  </header>
+
+  <div class="container">
+    <article class="notice-detail">
+      <div class="prose"><Content /></div>
+      {attachment && (
+        <a class="notice-attachment" href={attachment} target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" /><path d="M14 3v5h5M12 12v6M9.5 15.5 12 18l2.5-2.5" /></svg>
+          <span>
+            <strong>Open attachment</strong>
+            <small>{fileName}</small>
+          </span>
+        </a>
+      )}
+      <p class="notice-back"><a class="text-link" href="/notices/">All notices</a></p>
+    </article>
+  </div>
+</BaseLayout>
